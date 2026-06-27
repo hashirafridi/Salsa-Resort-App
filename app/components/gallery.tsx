@@ -19,9 +19,9 @@ const legacyRoute = {
 
 const ACCENT = "#c8324a";
 
-const RESORT_IMGS = ["/resort.jpg", "/g4.jpeg", "/g6.jpeg", "/g7.jpeg", "/g8.jpeg", "/gg.jpeg"];
-const KIDS_IMGS = ["/kids-play.jpeg", "/kids-play.jpeg", "/kids-play.jpeg"];
-const BONFIRE_IMGS = ["/bonfire.jpg", "/bonfire.jpg", "/bonfire.jpg"];
+const RESORT_IMGS = ["/resort.webp", "/g4.webp", "/g6.webp", "/g7.webp", "/g8.webp", "/gg.webp"];
+const KIDS_IMGS = ["/kids-play.webp", "/kids-play.webp", "/kids-play.webp"];
+const BONFIRE_IMGS = ["/bonfire.webp", "/bonfire.webp", "/bonfire.webp"];
 
 const TABS: { id: string; label: string; images: string[] }[] = [
   { id: "all", label: "All", images: [...RESORT_IMGS, ...KIDS_IMGS, ...BONFIRE_IMGS] },
