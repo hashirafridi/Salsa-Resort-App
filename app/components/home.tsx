@@ -34,13 +34,13 @@ const ACCENT_SOFT = "#fff1f3";
 
 const IMAGES = {
   resort: "/resort.jpg",
-  g4: "/g4.webp",
+  g4: "/river.webp",
   g6: "/g6.webp",
   g7: "/g7.webp",
   g8: "/g8.webp",
-  gg: "/gg.webp",
+  gg: "/openlawn.webp",
   kidsPlay: "/kids-play.webp",
-  bonfire: "/bonfire.webp",
+  bonfire: "/bbq.jpg",
 };
 
 const NAV = [
@@ -88,17 +88,17 @@ const ROOMS = [
   {
     name: "Deluxe Valley Room",
     desc: "Spacious room with a private balcony overlooking the valley and river.",
-    img: "/rm1.webp",
+    img: "/room1.webp",
   },
   {
     name: "Family Suite",
     desc: "Two-bedroom suite perfect for families, with a sitting area and forest views.",
-    img: "/rm2.webp",
+    img: "/room2.webp",
   },
   {
     name: "Riverside Room",
     desc: "Wake up to the sound of the Kunhar River right outside your window.",
-    img: "/rm3.webp",
+    img: "/room3.webp",
   },
 ];
 
