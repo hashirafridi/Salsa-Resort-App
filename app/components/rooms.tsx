@@ -20,17 +20,17 @@ const ROOMS = [
   {
     name: "Deluxe Valley Room",
     desc: "Spacious room with a private balcony overlooking the valley and river.",
-    img: "/rm1.webp",
+    img: "/room1.webp",
   },
   {
     name: "Family Suite",
     desc: "Two-bedroom suite perfect for families, with a sitting area and forest views.",
-    img: "/rm2.webp",
+    img: "/room2.webp",
   },
   {
     name: "Riverside Room",
     desc: "Wake up to the sound of the Kunhar River right outside your window.",
-    img: "/rm3.webp",
+    img: "/room3.webp",
   },
   {
     name: "Forest View Room",
