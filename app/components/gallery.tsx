@@ -21,7 +21,7 @@ const ACCENT = "#c8324a";
 
 const RESORT_IMGS = ["/resort.webp", "/g4.webp", "/g6.webp", "/g7.webp", "/g8.webp", "/gg.webp", "/g1.webp", "/g2.webp" , "/river.webp"];
 const KIDS_IMGS = ["/kids-play.webp", "/kidf.webp", "/kid3.webp" , "/k1.webp" , "/k2.webp", "/k3.webp" , "/k4.webp" , "/k5.webp", "/k6.webp", "/k7.webp" ,"/k8.webp", "/k9.webp"];
-const BONFIRE_IMGS = ["/Bonfire1.webp", "/bornfire2.webp", "/bf3.webp"];
+const BONFIRE_IMGS = ["/b3.webp", "/b1.webp", "/b2.webp"];
 
 const TABS: { id: string; label: string; images: string[] }[] = [
   { id: "all", label: "All", images: [...RESORT_IMGS, ...KIDS_IMGS, ...BONFIRE_IMGS] },
