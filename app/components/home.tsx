@@ -34,7 +34,7 @@ const ACCENT_SOFT = "#fff1f3";
 
 const IMAGES = {
   resort: "/resort.webp",
-  g4: "/header.jpeg",
+  g4: "/g6.webp",
   g6: "/g6.webp",
   g7: "/g7.webp",
   g8: "/g8.webp",
