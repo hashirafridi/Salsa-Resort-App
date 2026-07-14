@@ -42,9 +42,9 @@ const ACCENT = "#c8324a";
 const ACCENT_SOFT = "#fff1f3";
 
 const IMAGES = {
-  resort: "/resort.webp",
+  resort: "/hero-image.webp",
   g4: "/g6.webp",
-  g6: "/g6.webp",
+  g6: "/gg.webp",
   g7: "/g7.webp",
   g8: "/g8.webp",
   gg: "/openlawn.webp",
@@ -377,7 +377,11 @@ export default function Home() {
       </section>
 
       {/* ROOMS */}
-      <section id="rooms" className="py-24 px-6" style={{ background: "#fafafa" }}>
+      <section
+        id="rooms"
+        className="py-24 px-6"
+        style={{ background: "#fafafa", borderBottom: `3px solid ${ACCENT}` }}
+      >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-14">
             <span
@@ -417,16 +421,6 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-10">
-            <Link
-              href="/pages/rooms"
-              className="inline-flex items-center gap-2 text-sm font-semibold transition-transform hover:translate-x-1"
-              style={{ color: ACCENT }}
-            >
-              View all rooms →
-            </Link>
-          </div>
-
         </div>
       </section>
 
