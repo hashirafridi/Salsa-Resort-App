@@ -2,6 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import {
+  formatDisplayNumber,
+  PHONE_NUMBERS,
+  PRIMARY_PHONE,
+  PRIMARY_WHATSAPP,
+  toTelLink,
+  toWhatsAppLink,
+  WHATSAPP_NUMBERS,
+} from "../lib/contact";
 
 
 
@@ -33,7 +42,7 @@ const ACCENT = "#c8324a";
 const ACCENT_SOFT = "#fff1f3";
 
 const IMAGES = {
-  resort: "/resort.jpg",
+  resort: "/hero-image.webp",
   g4: "/g4.jpeg",
   g6: "/g6.jpeg",
   g7: "/g7.jpeg",
@@ -47,7 +56,7 @@ const NAV = [
   { label: "Home", href: "#home" },
   { label: "Rooms", href: "#rooms" },
   { label: "Amenities", href: "#amenities" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/pages/contact" },
 ];
 
 const FACILITIES = [
@@ -121,22 +130,32 @@ export default function Home() {
             </span>
           </a>
           <nav className="hidden md:flex items-center gap-8">
-            {NAV.map((n) => (
-              <a
-                key={n.label}
-                href={n.href}
-                className="text-sm font-medium text-neutral-700 hover:text-neutral-950 transition-colors"
-              >
-                {n.label}
-              </a>
-            ))}
-            <a
-              href="#contact"
+            {NAV.map((n) =>
+              n.href.startsWith("/") ? (
+                <Link
+                  key={n.label}
+                  href={n.href}
+                  className="text-sm font-medium text-neutral-700 hover:text-neutral-950 transition-colors"
+                >
+                  {n.label}
+                </Link>
+              ) : (
+                <a
+                  key={n.label}
+                  href={n.href}
+                  className="text-sm font-medium text-neutral-700 hover:text-neutral-950 transition-colors"
+                >
+                  {n.label}
+                </a>
+              )
+            )}
+            <Link
+              href="/pages/contact"
               className="text-sm font-semibold px-5 py-2 rounded-full text-white transition-transform hover:scale-105"
               style={{ background: ACCENT }}
             >
               Book Stay
-            </a>
+            </Link>
           </nav>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
@@ -149,16 +168,27 @@ export default function Home() {
         {menuOpen && (
           <div className="md:hidden border-t border-neutral-200 bg-white">
             <div className="px-6 py-4 flex flex-col gap-3">
-              {NAV.map((n) => (
-                <a
-                  key={n.label}
-                  href={n.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-sm font-medium text-neutral-700 py-2"
-                >
-                  {n.label}
-                </a>
-              ))}
+              {NAV.map((n) =>
+                n.href.startsWith("/") ? (
+                  <Link
+                    key={n.label}
+                    href={n.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-sm font-medium text-neutral-700 py-2"
+                  >
+                    {n.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={n.label}
+                    href={n.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="text-sm font-medium text-neutral-700 py-2"
+                  >
+                    {n.label}
+                  </a>
+                )
+              )}
             </div>
           </div>
         )}
@@ -167,7 +197,7 @@ export default function Home() {
       {/* HERO */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        className="relative min-h-screen flex items-center overflow-hidden"
       >
         <div
           className="absolute inset-0 bg-cover bg-center"
@@ -177,23 +207,41 @@ export default function Home() {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.15) 40%, rgba(0,0,0,0.55) 100%)",
+              "linear-gradient(90deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 42%, rgba(0,0,0,0.1) 70%, transparent 100%), linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 35%, rgba(0,0,0,0.35) 100%)",
           }}
         />
-        <div className="relative z-10 text-center px-6 max-w-4xl pt-24">
-          <p className="text-xs md:text-sm tracking-[0.35em] uppercase mb-8" style={{ color: ACCENT }}>
-            Kaghan Valley · Pakistan
-          </p>
-          <h1
-            className="text-6xl md:text-8xl font-normal italic text-white tracking-tight leading-[1.05] mb-10"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif", textShadow: "0 2px 30px rgba(0,0,0,0.4)" }}
-          >
-            Salsa Resort
-          </h1>
-          <p className="text-sm md:text-base text-white/90 max-w-xl mx-auto tracking-[0.25em] uppercase leading-relaxed mb-12">
-            Where the mountains meet refined tranquility
-          </p>
-          <div className="mx-auto w-px h-16 bg-white/40" />
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-10 pt-20">
+          <div className="max-w-xl text-left">
+            <p
+              className="text-xs md:text-sm tracking-[0.3em] uppercase mb-5 text-white/80"
+            >
+              Kaghan Valley · Pakistan
+            </p>
+            <h1
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal italic text-white tracking-tight leading-[1.05] mb-6"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif", textShadow: "0 2px 24px rgba(0,0,0,0.35)" }}
+            >
+              Salsa Resort
+            </h1>
+            <p className="text-base md:text-lg text-white/85 max-w-md leading-relaxed mb-10">
+              Where the mountains meet refined tranquility.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <Link
+                href="/pages/contact"
+                className="inline-flex items-center px-7 py-3.5 rounded-full text-sm font-semibold text-white transition-transform hover:scale-105"
+                style={{ background: ACCENT }}
+              >
+                Book Your Stay
+              </Link>
+              <a
+                href="#rooms"
+                className="inline-flex items-center text-sm font-medium text-white/90 hover:text-white transition-colors"
+              >
+                Explore rooms →
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -359,13 +407,13 @@ export default function Home() {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{r.name}</h3>
                   <p className="text-neutral-600 leading-relaxed mb-4">{r.desc}</p>
-                  <a
-                    href="#contact"
+                  <Link
+                    href="/pages/contact"
                     className="inline-flex items-center gap-2 text-sm font-semibold transition-transform hover:translate-x-1"
                     style={{ color: ACCENT }}
                   >
                     Inquire to book →
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -461,13 +509,24 @@ export default function Home() {
           <p className="text-white/90 text-lg mb-8 max-w-xl mx-auto">
             Reach out and let our team craft the perfect getaway for you and your family.
           </p>
-          <a
-            href="#contact"
-            className="inline-block px-8 py-4 rounded-full font-semibold bg-white text-neutral-900 hover:scale-105 transition-transform shadow-xl"
-            style={{ color: ACCENT }}
-          >
-            Plan Your Stay
-          </a>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a
+              href={toTelLink(PRIMARY_PHONE)}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-white hover:scale-105 transition-transform shadow-xl"
+              style={{ color: ACCENT }}
+            >
+              Call {formatDisplayNumber(PRIMARY_PHONE)}
+            </a>
+            <a
+              href={toWhatsAppLink(PRIMARY_WHATSAPP, "Hello! I would like to inquire about booking at Salsa Resort.")}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-white hover:scale-105 transition-transform shadow-xl"
+              style={{ background: "#25D366" }}
+            >
+              WhatsApp
+            </a>
+          </div>
         </div>
       </section>
 
@@ -493,9 +552,15 @@ export default function Home() {
             <ul className="space-y-2 text-sm">
               {NAV.map((n) => (
                 <li key={n.label}>
-                  <a href={n.href} className="hover:text-white transition-colors">
-                    {n.label}
-                  </a>
+                  {n.href.startsWith("/") ? (
+                    <Link href={n.href} className="hover:text-white transition-colors">
+                      {n.label}
+                    </Link>
+                  ) : (
+                    <a href={n.href} className="hover:text-white transition-colors">
+                      {n.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -504,9 +569,25 @@ export default function Home() {
             <h4 className="text-white font-semibold mb-4">Get in touch</h4>
             <ul className="space-y-2 text-sm text-neutral-400">
               <li>📍 Kaghan Valley, KPK, Pakistan</li>
-              <li>📞 +92 — coming soon</li>
-              <li>✉️ hello@salsaresort.pk</li>
-              <li>💬 WhatsApp — coming soon</li>
+              {PHONE_NUMBERS.map((num) => (
+                <li key={`phone-${num}`}>
+                  <a href={toTelLink(num)} className="hover:text-white transition-colors">
+                    📞 {formatDisplayNumber(num)}
+                  </a>
+                </li>
+              ))}
+              {WHATSAPP_NUMBERS.map((num) => (
+                <li key={`wa-${num}`}>
+                  <a
+                    href={toWhatsAppLink(num)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors"
+                  >
+                    💬 WhatsApp {formatDisplayNumber(num)}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
