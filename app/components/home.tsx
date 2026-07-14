@@ -42,14 +42,14 @@ const ACCENT = "#c8324a";
 const ACCENT_SOFT = "#fff1f3";
 
 const IMAGES = {
-  resort: "/hero-image.webp",
-  g4: "/g4.jpeg",
-  g6: "/g6.jpeg",
-  g7: "/g7.jpeg",
-  g8: "/g8.jpeg",
-  gg: "/gg.jpeg",
-  kidsPlay: "/kids-play.jpeg",
-  bonfire: "/bonfire.jpg",
+  resort: "/resort.webp",
+  g4: "/g6.webp",
+  g6: "/g6.webp",
+  g7: "/g7.webp",
+  g8: "/g8.webp",
+  gg: "/openlawn.webp",
+  kidsPlay: "/kids-play.webp",
+  bonfire: "/b3.webp",
 };
 
 const NAV = [
@@ -97,17 +97,17 @@ const ROOMS = [
   {
     name: "Deluxe Valley Room",
     desc: "Spacious room with a private balcony overlooking the valley and river.",
-    img: "/rm1.avif",
+    img: "/room1.webp",
   },
   {
     name: "Family Suite",
     desc: "Two-bedroom suite perfect for families, with a sitting area and forest views.",
-    img: "/rm2.avif",
+    img: "/room2.webp",
   },
   {
     name: "Riverside Room",
     desc: "Wake up to the sound of the Kunhar River right outside your window.",
-    img: "/rm3.avif",
+    img: "/room3.webp",
   },
 ];
 
@@ -122,12 +122,11 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200/60">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <a href="#home" className="flex items-center">
-            <span
-              className="font-semibold tracking-tight text-2xl italic"
-              style={{ color: ACCENT, fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              Salsa Resort
-            </span>
+            <img
+              src="/logo1.png"
+              alt="Salsa Resort Logo"
+              className="h-22 w-auto object-contain mix-blend-multiply"
+            />
           </a>
           <nav className="hidden md:flex items-center gap-8">
             {NAV.map((n) =>
@@ -535,12 +534,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-10">
           <div className="md:col-span-2">
             <div className="mb-4">
-              <span
-                className="font-semibold tracking-tight text-2xl italic"
-                style={{ color: ACCENT, fontFamily: "'Playfair Display', Georgia, serif" }}
-              >
-                Salsa Resort
-              </span>
+              <img
+                src="/logo1.jpg.webp"
+                alt="Salsa Resort Logo"
+                className="h-10 w-auto object-contain grayscale invert brightness-200 mix-blend-screen opacity-90"
+              />
             </div>
             <p className="text-neutral-400 leading-relaxed max-w-md">
               An elegant and serene resort in the heart of Kaghan Valley, Pakistan — offering

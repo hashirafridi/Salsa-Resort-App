@@ -20,32 +20,32 @@ const ROOMS = [
   {
     name: "Deluxe Valley Room",
     desc: "Spacious room with a private balcony overlooking the valley and river.",
-    img: "/rm1.avif",
+    img: "/room1.webp",
   },
   {
     name: "Family Suite",
     desc: "Two-bedroom suite perfect for families, with a sitting area and forest views.",
-    img: "/rm2.avif",
+    img: "/room2.webp",
   },
   {
     name: "Riverside Room",
     desc: "Wake up to the sound of the Kunhar River right outside your window.",
-    img: "/rm3.avif",
+    img: "/room3.webp",
   },
   {
     name: "Forest View Room",
     desc: "Cozy room facing the Kamal Bunn pine forest, perfect for quiet mornings.",
-    img: "/rm4.avif",
+    img: "/rm4.webp",
   },
   {
     name: "Executive Suite",
     desc: "Premium suite with sitting lounge, balcony, and panoramic mountain views.",
-    img: "/rm5.avif",
+    img: "/rm5.webp",
   },
   {
     name: "Standard Twin",
     desc: "Comfortable twin-bed room with modern amenities and warm decor.",
-    img: "/rm6.avif",
+    img: "/rm6.webp",
   },
 ];
 
