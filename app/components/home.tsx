@@ -492,34 +492,58 @@ export default function Home() {
         className="py-24 px-6 relative overflow-hidden"
         style={{ background: `linear-gradient(135deg, ${ACCENT} 0%, #8a1e30 100%)` }}
       >
-        <div className="max-w-4xl mx-auto text-center text-white relative z-10">
-          <h2
-            className="text-4xl md:text-5xl font-bold mb-5"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-          >
-            Your mountain escape awaits.
-          </h2>
-          <p className="text-white/90 text-lg mb-8 max-w-xl mx-auto">
-            Reach out and let our team craft the perfect getaway for you and your family.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <a
-              href={toTelLink(PRIMARY_PHONE)}
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-white hover:scale-105 transition-transform shadow-xl"
-              style={{ color: ACCENT }}
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14">
+
+          {/* LEFT — text + contact buttons */}
+          <div className="w-full md:w-[45%] text-white text-center md:text-left">
+            <h2
+              className="text-4xl md:text-5xl font-bold mb-5"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Call {formatDisplayNumber(PRIMARY_PHONE)}
-            </a>
-            <a
-              href={toWhatsAppLink(PRIMARY_WHATSAPP, "Hello! I would like to inquire about booking at Salsa Resort.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-white hover:scale-105 transition-transform shadow-xl"
-              style={{ background: "#25D366" }}
-            >
-              WhatsApp
-            </a>
+              Your mountain escape awaits.
+            </h2>
+            <p className="text-white/90 text-lg mb-8 max-w-xl md:mx-0 mx-auto">
+              Reach out and let our team craft the perfect getaway for you and your family.
+            </p>
+            <div className="flex flex-wrap justify-center md:justify-start gap-4">
+              <a
+                href={toTelLink(PRIMARY_PHONE)}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold bg-white hover:scale-105 transition-transform shadow-xl"
+                style={{ color: ACCENT }}
+              >
+                Call {formatDisplayNumber(PRIMARY_PHONE)}
+              </a>
+              <a
+                href={toWhatsAppLink(PRIMARY_WHATSAPP, "Hello! I would like to inquire about booking at Salsa Resort.")}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold text-white hover:scale-105 transition-transform shadow-xl"
+                style={{ background: "#25D366" }}
+              >
+                WhatsApp
+              </a>
+            </div>
           </div>
+
+          {/* RIGHT — Google Maps embed */}
+          <div className="w-full md:w-[55%]">
+            <div
+              className="w-full overflow-hidden shadow-2xl"
+              style={{ height: "340px", borderRadius: "18px" }}
+            >
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3560.42!2d73.543387!3d34.723418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e1!3m2!1sen!2s!4v1699999999999!5m2!1sen!2s"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Salsa Resort Location — Kaghan Valley"
+              />
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -649,14 +673,14 @@ function FacilitiesScroller() {
       </div>
 
       <div className="flex justify-center items-center gap-4 mt-8">
-        <button
+      {/*  <button
           onClick={() => setPage((p) => Math.max(0, p - 1))}
           disabled={safePage === 0}
           aria-label="Previous"
           className="w-11 h-11 rounded-full border border-neutral-300 grid place-items-center hover:bg-neutral-50 transition-colors text-neutral-700 disabled:opacity-40 disabled:cursor-not-allowed"
         >
           ←
-        </button>
+        </button>*
         <div className="flex gap-2">
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
@@ -679,7 +703,7 @@ function FacilitiesScroller() {
           style={{ background: ACCENT, borderColor: ACCENT }}
         >
           →
-        </button>
+        </button>*/}
       </div>
 
       <style>{`

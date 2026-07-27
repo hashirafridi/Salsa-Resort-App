@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   title: "Salsa Resort - Kaghan Valley, Pakistan",
   description:
     "Elegant resort in Kaghan Valley with comfortable rooms, river access, lawns, BBQ nights, and mountain views.",
+  icons: {
+    icon: "/logonew.webp",
+    shortcut: "/logonew.webp",
+    apple: "/logonew.webp",
+  },
 };
 
 export default function RootLayout({
