@@ -19,13 +19,34 @@ const legacyRoute = {
 
 const ACCENT = "#c8324a";
 
-const RESORT_IMGS = ["/resort.webp", "/g4.webp", "/g6.webp", "/g7.webp", "/g8.webp", "/gg.webp", "/g1.webp", "/g2.webp" , "/river.webp"];
-const KIDS_IMGS = ["/kids-play.webp", "/kidf.webp", "/kid3.webp" , "/k1.webp" , "/k2.webp", "/k3.webp" , "/k4.webp" , "/k5.webp", "/k6.webp", "/k7.webp" ,"/k8.webp", "/k9.webp"];
-const BONFIRE_IMGS = ["/b3.webp", "/b1.webp", "/b2.webp"];
+const RESORT_IMGS = [
+  "/resort.webp",
+  "/g4.webp",
+  "/g6.webp",
+  "/g7.webp",
+  "/new-images/home-exchange.webp",
+  "/g1.webp",
+  "/g2.webp",
+  "/new-images/resort21.webp",
+  "/new-images/resort22.webp",
+  "/new-images/resort24.webp",
+];
+const ROOMS_IMGS = [
+  "/room1.webp",
+  "/room2.webp",
+  "/room3.webp",
+  "/new-images/room21.webp",
+  "/new-images/rooms22.webp",
+];
+const RIVERS_IMGS = ["/g8.webp", "/new-images/riverss.webp", "/river.webp"];
+const KIDS_IMGS = ["/kids-play.webp", "/kidf.webp", "/kid3.webp", "/k1.webp", "/k2.webp", "/k3.webp", "/k4.webp", "/k5.webp", "/k6.webp", "/k7.webp", "/k8.webp", "/k9.webp"];
+const BONFIRE_IMGS = ["/b3.webp", "/b1.webp", "/b2.webp", "/new-images/bonfire1212.webp"];
 
 const TABS: { id: string; label: string; images: string[] }[] = [
-  { id: "all", label: "All", images: [...RESORT_IMGS, ...KIDS_IMGS, ...BONFIRE_IMGS] },
+  { id: "all", label: "All", images: [...RESORT_IMGS, ...ROOMS_IMGS, ...RIVERS_IMGS, ...KIDS_IMGS, ...BONFIRE_IMGS] },
   { id: "resort", label: "Resort", images: RESORT_IMGS },
+  { id: "rooms", label: "Rooms", images: ROOMS_IMGS },
+  { id: "rivers", label: "Rivers", images: RIVERS_IMGS },
   { id: "kids", label: "Kids Play Area", images: KIDS_IMGS },
   { id: "bonfire", label: "Bonfire Nights", images: BONFIRE_IMGS },
 ];

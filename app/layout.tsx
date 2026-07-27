@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { SITE_NAME, SITE_URL } from "./lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Salsa Resort - Kaghan Valley, Pakistan",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Salsa Resort Kaghan Valley | Mountain Resort & Family Stay in Pakistan",
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
-    "Elegant resort in Kaghan Valley with comfortable rooms, river access, lawns, BBQ nights, and mountain views.",
+    "Salsa Resort is a peaceful mountain resort in Kaghan Valley, Pakistan, offering comfortable rooms, family suites, Kunhar River access, BBQ nights, bonfire evenings, kids play area, fresh trout fish and scenic mountain views.",
   icons: {
     icon: "/logonew.webp",
     shortcut: "/logonew.webp",

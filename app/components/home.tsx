@@ -11,6 +11,7 @@ import {
   toWhatsAppLink,
   WHATSAPP_NUMBERS,
 } from "../lib/contact";
+import { FAQS } from "../lib/site";
 
 
 
@@ -44,7 +45,7 @@ const ACCENT_SOFT = "#fff1f3";
 const IMAGES = {
   resort: "/hero-image.webp",
   g4: "/g6.webp",
-  g6: "/gg.webp",
+  g6: "/new-images/home-exchange.webp",
   g7: "/g7.webp",
   g8: "/g8.webp",
   gg: "/openlawn.webp",
@@ -233,12 +234,6 @@ export default function Home() {
               >
                 Book Your Stay
               </Link>
-              <a
-                href="#rooms"
-                className="inline-flex items-center text-sm font-medium text-white/90 hover:text-white transition-colors"
-              >
-                Explore rooms →
-              </a>
             </div>
           </div>
         </div>
@@ -309,19 +304,39 @@ export default function Home() {
       {/* GALLERY */}
       <section className="py-16 md:py-24 px-4 md:px-6" style={{ background: "#fafafa" }}>
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-10 md:mb-14">
-            <span
-              className="text-xs font-bold tracking-[0.25em] uppercase"
-              style={{ color: ACCENT }}
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+            <div className="text-center md:text-left">
+              <span
+                className="text-xs font-bold tracking-[0.25em] uppercase"
+                style={{ color: ACCENT }}
+              >
+                Gallery
+              </span>
+              <h2
+                className="text-3xl md:text-5xl font-bold tracking-tight mt-3"
+                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+              >
+                A glimpse of paradise
+              </h2>
+            </div>
+            <Link
+              href="/pages/media"
+              className="group inline-flex items-center gap-4 self-center md:self-auto shrink-0 rounded-full border-2 px-8 py-4 min-w-[240px] text-sm font-semibold transition-all hover:scale-[1.02] hover:shadow-lg"
+              style={{ borderColor: ACCENT, color: ACCENT, background: ACCENT_SOFT }}
             >
-              Gallery
-            </span>
-            <h2
-              className="text-3xl md:text-5xl font-bold tracking-tight mt-3"
-              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-            >
-              A glimpse of paradise
-            </h2>
+              <span
+                className="flex h-10 w-10 items-center justify-center rounded-full text-white transition-transform group-hover:scale-110"
+                style={{ background: ACCENT }}
+              >
+                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current" aria-hidden="true">
+                  <path d="M8 5v14l11-7L8 5z" />
+                </svg>
+              </span>
+              <span className="text-left leading-tight">
+                <span className="block text-xs font-medium uppercase tracking-wider opacity-80">Watch</span>
+                <span className="block text-base">Resort Videos</span>
+              </span>
+            </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             {GALLERY.map((src, i) => (
@@ -341,13 +356,20 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-10">
+          <div className="flex flex-wrap justify-center gap-6 mt-10">
             <Link
               href="/pages/gallery"
               className="inline-flex items-center gap-2 text-sm font-semibold transition-transform hover:translate-x-1"
               style={{ color: ACCENT }}
             >
               View full gallery →
+            </Link>
+            <Link
+              href="/pages/media"
+              className="inline-flex items-center gap-2 text-sm font-semibold transition-transform hover:translate-x-1"
+              style={{ color: ACCENT }}
+            >
+              Watch videos →
             </Link>
           </div>
 
@@ -544,6 +566,51 @@ export default function Home() {
             </div>
           </div>
 
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 md:py-20 px-6 bg-white border-t border-neutral-200">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <span
+              className="text-xs font-bold tracking-[0.25em] uppercase"
+              style={{ color: ACCENT }}
+            >
+              FAQ
+            </span>
+            <h2
+              className="text-3xl md:text-4xl font-bold tracking-tight mt-3"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              Frequently asked questions
+            </h2>
+            <p className="text-neutral-600 mt-3 text-base max-w-xl mx-auto">
+              Quick answers about staying at Salsa Resort in Kaghan Valley.
+            </p>
+          </div>
+          <div className="space-y-3">
+            {FAQS.map((faq) => (
+              <details
+                key={faq.question}
+                className="group rounded-2xl border border-neutral-200 bg-[#fafafa] px-5 py-4 open:bg-white open:shadow-sm transition-colors"
+              >
+                <summary className="cursor-pointer list-none flex items-start justify-between gap-4 font-semibold text-neutral-900">
+                  <span>{faq.question}</span>
+                  <span
+                    className="shrink-0 mt-0.5 text-lg leading-none transition-transform group-open:rotate-45"
+                    style={{ color: ACCENT }}
+                    aria-hidden="true"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="mt-3 text-neutral-600 leading-relaxed text-[15px] pr-8">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -1,58 +1,63 @@
+import type { Metadata } from "next";
 import Home from "./components/home";
+import JsonLd from "./components/JsonLd";
+import { getFaqJsonLd, getResortJsonLd } from "./lib/schema";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "./lib/site";
 
-export const metadata = {
-  title: "Salsa Resort - Kaghan Valley, Pakistan",
-
+export const metadata: Metadata = {
+  title: "Salsa Resort Kaghan Valley | Mountain Resort & Family Stay in Pakistan",
   description:
-    "Elegant resort in Kaghan Valley with comfortable rooms, river access, lawns, BBQ nights, and mountain views.",
-
+    "Salsa Resort is a peaceful mountain resort in Kaghan Valley, offering comfortable rooms, BBQ nights, fresh trout fish and scenic mountain views.",
   keywords: [
     "Salsa Resort",
-    "Kaghan Valley",
-    "Pakistan",
-    "Resort in Kaghan",
-    "Hotel in Kaghan",
-    "Mountain Resort",
-    "Luxury Resort",
-    "Family Resort",
+    "Salsa Resort Kaghan",
+    "resort in Kaghan Valley",
+    "hotel in Kaghan Valley",
+    "best resort in Kaghan",
+    "family hotel in Kaghan",
+    "Kaghan Valley resort",
+    "Kunhar River resort",
+    "hotels in Kaghan Pakistan",
   ],
-
   alternates: {
-    canonical: "https://salsaresorts.com",
+    canonical: SITE_URL,
   },
-
   robots: {
     index: true,
     follow: true,
   },
-
   openGraph: {
-    title: "Salsa Resort - Kaghan Valley, Pakistan",
+    title: "Salsa Resort Kaghan Valley | Where the Mountains Meet Refined Tranquility",
     description:
-      "Elegant resort in Kaghan Valley with comfortable rooms, river access, lawns, BBQ nights, and mountain views.",
-    url: "https://salsaresorts.com",
-    siteName: "Salsa Resort",
+      "Discover Salsa Resort in Kaghan Valley, Pakistan — comfortable rooms, river access, mountain views, BBQ nights, bonfire evenings and family-friendly hospitality.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
     images: [
       {
-        url: "/resort.webp",
+        url: absoluteUrl("/resort.webp"),
         width: 1200,
         height: 630,
         alt: "Salsa Resort in Kaghan Valley",
       },
     ],
-    type: "website",
-    locale: "en_US",
   },
-
   twitter: {
     card: "summary_large_image",
-    title: "Salsa Resort - Kaghan Valley, Pakistan",
+    title: "Salsa Resort Kaghan Valley",
     description:
-      "Elegant resort in Kaghan Valley with comfortable rooms, river access, lawns, BBQ nights, and mountain views.",
-    images: ["/resort.webp"],
+      "A peaceful mountain resort in Kaghan Valley, Pakistan with rooms, family suites, Kunhar River access and scenic valley views.",
+    images: [absoluteUrl("/resort.webp")],
   },
 };
 
 export default function Page() {
-  return <Home />;
+  return (
+    <>
+      <JsonLd data={getResortJsonLd()} />
+      <JsonLd data={getFaqJsonLd()} />
+      <Home />
+    </>
+  );
 }
