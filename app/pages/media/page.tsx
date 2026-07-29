@@ -5,7 +5,7 @@ import { absoluteUrl, SITE_URL } from "../../lib/site";
 export const metadata: Metadata = {
   title: "Videos & Facebook Updates",
   description:
-    "Watch Salsa Resort videos and follow Facebook updates from The Salsa Resorts Kaghan — tours, bonfire nights and valley life.",
+    "Watch Salsa Resort videos and follow Facebook updates from The Salsa Resorts Kaghan - tours, bonfire nights and valley life.",
   keywords: [
     "Salsa Resort videos",
     "Salsa Resort Facebook",

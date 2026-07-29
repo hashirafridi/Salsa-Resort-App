@@ -9,7 +9,7 @@ const legacyRoute = {
   validateSearch: (search: { tab?: string }) => ({ tab: search.tab || "all" }),
   head: () => ({
     meta: [
-      { title: "Gallery — Salsa Resort" },
+      { title: "Gallery - Salsa Resort" },
       { name: "description", content: "Browse the full gallery of Salsa Resort, Kaghan Valley." },
     ],
   }),

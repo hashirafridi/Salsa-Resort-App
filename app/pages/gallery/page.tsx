@@ -5,7 +5,7 @@ import { absoluteUrl, SITE_URL } from "../../lib/site";
 export const metadata: Metadata = {
   title: "Photo Gallery",
   description:
-    "Browse photos of Salsa Resort in Kaghan Valley — rooms, resort grounds, rivers, kids play area, bonfire nights and mountain scenery.",
+    "Browse photos of Salsa Resort in Kaghan Valley - rooms, resort grounds, rivers, kids play area, bonfire nights and mountain scenery.",
   keywords: [
     "Salsa Resort gallery",
     "Kaghan Valley resort photos",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Salsa Resort Photo Gallery",
-    description: "Photos from Salsa Resort — rooms, rivers, family spaces and valley views in Kaghan.",
+    description: "Photos from Salsa Resort - rooms, rivers, family spaces and valley views in Kaghan.",
     images: [absoluteUrl("/g6.webp")],
   },
 };
