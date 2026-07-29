@@ -14,8 +14,6 @@ type YTPlayer = {
 
 declare global {
   interface Window {
-    FB?: { XFBML: { parse: (node?: HTMLElement) => void } };
-    fbAsyncInit?: () => void;
     YT?: {
       Player: new (
         elementId: string,
@@ -35,43 +33,55 @@ declare global {
 }
 
 function FacebookFeed() {
-  useEffect(() => {
-    if (document.getElementById("facebook-jssdk")) {
-      window.FB?.XFBML.parse();
-      return;
-    }
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(340);
 
-    window.fbAsyncInit = () => {
-      window.FB?.XFBML.parse();
+  useEffect(() => {
+    const updateWidth = () => {
+      const next = Math.floor(containerRef.current?.clientWidth || 340);
+      // Facebook Page Plugin only supports 180–500px
+      const clamped = Math.max(180, Math.min(500, next));
+      setWidth((prev) => (Math.abs(prev - clamped) < 12 ? prev : clamped));
     };
 
-    const script = document.createElement("script");
-    script.id = "facebook-jssdk";
-    script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v24.0";
-    script.async = true;
-    script.defer = true;
-    script.crossOrigin = "anonymous";
-    document.body.appendChild(script);
+    updateWidth();
+    const observer = new ResizeObserver(updateWidth);
+    if (containerRef.current) observer.observe(containerRef.current);
+    window.addEventListener("resize", updateWidth);
 
     return () => {
-      delete window.fbAsyncInit;
+      observer.disconnect();
+      window.removeEventListener("resize", updateWidth);
     };
   }, []);
 
+  const height = width < 400 ? 560 : 700;
+  const src =
+    "https://www.facebook.com/plugins/page.php?" +
+    new URLSearchParams({
+      href: FACEBOOK_PAGE_URL,
+      tabs: "timeline",
+      width: String(width),
+      height: String(height),
+      small_header: "false",
+      adapt_container_width: "true",
+      hide_cover: "false",
+      show_facepile: "false",
+    }).toString();
+
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-white p-4 md:p-6 shadow-sm">
-      <div id="fb-root" />
-      <div className="flex justify-center">
-        <div
-          className="fb-page"
-          data-href={FACEBOOK_PAGE_URL}
-          data-tabs="timeline"
-          data-width="500"
-          data-height="650"
-          data-small-header="false"
-          data-adapt-container-width="true"
-          data-hide-cover="false"
-          data-show-facepile="false"
+    <div className="rounded-2xl border border-neutral-200 bg-white p-3 sm:p-4 md:p-6 shadow-sm">
+      <div ref={containerRef} className="w-full max-w-[500px] mx-auto">
+        <iframe
+          key={`${width}x${height}`}
+          title="The Salsa Resorts Kaghan on Facebook"
+          src={src}
+          width={width}
+          height={height}
+          className="mx-auto block max-w-full"
+          style={{ border: "none", overflow: "auto", touchAction: "pan-y" }}
+          scrolling="yes"
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
         />
       </div>
     </div>
