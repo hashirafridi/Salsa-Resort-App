@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Salsa Resort Kaghan Valley | Where the Mountains Meet Refined Tranquility",
     description:
-      "Discover Salsa Resort in Kaghan Valley, Pakistan — comfortable rooms, river access, mountain views, BBQ nights, bonfire evenings and family-friendly hospitality.",
+      "Discover Salsa Resort in Kaghan Valley, Pakistan - comfortable rooms, river access, mountain views, BBQ nights, bonfire evenings and family-friendly hospitality.",
     url: SITE_URL,
     siteName: SITE_NAME,
     type: "website",

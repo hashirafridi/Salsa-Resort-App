@@ -19,13 +19,13 @@ import { FAQS } from "../lib/site";
 const legacyRoute = {
   head: () => ({
     meta: [
-      { title: "Salsa Resort — Kaghan Valley, Pakistan" },
+      { title: "Salsa Resort - Kaghan Valley, Pakistan" },
       {
         name: "description",
         content:
           "Elegant and serene resort in Kaghan Valley offering unmatched comfort, natural beauty, and exceptional hospitality on the banks of the Kunhar River.",
       },
-      { property: "og:title", content: "Salsa Resort — Kaghan Valley" },
+      { property: "og:title", content: "Salsa Resort - Kaghan Valley" },
       {
         property: "og:description",
         content:
@@ -113,6 +113,174 @@ const ROOMS = [
 ];
 
 const GALLERY = [IMAGES.g4, IMAGES.g6, IMAGES.g7, IMAGES.g8, IMAGES.gg, IMAGES.resort];
+
+const REVIEWS = [
+  {
+    name: "Anas Khan",
+    place: "Islamabad",
+    rating: 5,
+    text: "Very comfortable resort with a beautiful view from the rooms. Perfect weekend escape for our family.",
+  },
+  {
+    name: "Ahmed Malik",
+    place: "Lahore",
+    rating: 5,
+    text: "Bohot maza aya yahan aa kar. Bohot khubsurat jagah hai aur staff bohot acha tha.",
+  },
+  {
+    name: "Hashir Afridi",
+    place: "Peshawar",
+    rating: 5,
+    text: "Kunhar River ke paas rehne ka scene alag hi tha. Rooms clean, views zabardast.",
+  },
+  {
+    name: "Amir Khan",
+    place: "Rawalpindi",
+    rating: 5,
+    text: "Great hospitality and peaceful atmosphere. The bonfire night was our kids' favourite.",
+  },
+  {
+    name: "Usman Ali",
+    place: "Karachi",
+    rating: 5,
+    text: "MashaAllah bohot shandaar resort hai. Location, rooms, aur dinner sab zabardast tha.",
+  },
+  {
+    name: "Bilal Ahmed",
+    place: "Abbottabad",
+    rating: 5,
+    text: "Fresh air, mountain views, and very friendly staff. Definitely coming back next season.",
+  },
+  {
+    name: "Saad Rehman",
+    place: "Faisalabad",
+    rating: 5,
+    text: "Yahan aa ke dil khush ho gaya. Family ke sath bohot peaceful stay raha, highly recommend.",
+  },
+  {
+    name: "Hamza Farooq",
+    place: "Multan",
+    rating: 5,
+    text: "Spacious rooms, open lawns, and the BBQ setup was excellent. Worth every rupee.",
+  },
+  {
+    name: "Taha Siddiqui",
+    place: "Gujranwala",
+    rating: 5,
+    text: "Room se valley ka view bohot pyara tha. Kids play area bhi children ke liye perfect hai.",
+  },
+  {
+    name: "Fahad Khan",
+    place: "Swat",
+    rating: 5,
+    text: "Clean rooms, warm food, and the riverside walk was unforgettable. Felt like home in the mountains.",
+  },
+  {
+    name: "Zainab Fatima",
+    place: "Sialkot",
+    rating: 5,
+    text: "Family stay ke liye best choice. Quiet, clean, aur staff har waqt help ke liye ready tha.",
+  },
+  {
+    name: "Omar Sheikh",
+    place: "Islamabad",
+    rating: 5,
+    text: "Woke up to pine forests and river sounds. Salsa Resort is exactly the peace we needed.",
+  },
+];
+
+function ReviewAvatar({ name, index }: { name: string; index: number }) {
+  const colors = ["#c8324a", "#8a1e30", "#b45309", "#0f766e", "#1d4ed8", "#7c3aed", "#be185d", "#047857"];
+  const bg = colors[index % colors.length];
+  return (
+    <svg viewBox="0 0 64 64" className="h-12 w-12 rounded-full" aria-hidden="true">
+      <circle cx="32" cy="32" r="32" fill={bg} />
+      <circle cx="32" cy="24" r="11" fill="#fff" opacity="0.95" />
+      <path d="M12 54c4-12 14-18 20-18s16 6 20 18" fill="#fff" opacity="0.95" />
+      <title>{name}</title>
+    </svg>
+  );
+}
+
+function ReviewsCarousel() {
+  const [index, setIndex] = useState(0);
+  const [itemsPerView, setItemsPerView] = useState(1);
+
+  useEffect(() => {
+    const update = () => {
+      if (window.innerWidth >= 1024) setItemsPerView(3);
+      else if (window.innerWidth >= 768) setItemsPerView(2);
+      else setItemsPerView(1);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  const maxIndex = Math.max(0, REVIEWS.length - itemsPerView);
+
+  useEffect(() => {
+    setIndex((i) => Math.min(i, maxIndex));
+  }, [maxIndex]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setIndex((i) => (i >= maxIndex ? 0 : i + 1));
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, [maxIndex]);
+
+  return (
+    <div>
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-700 ease-out"
+          style={{ transform: `translateX(-${(index * 100) / itemsPerView}%)` }}
+        >
+          {REVIEWS.map((review, i) => (
+            <div
+              key={review.name}
+              className="shrink-0 px-3"
+              style={{ width: `${100 / itemsPerView}%` }}
+            >
+              <article className="h-full rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <ReviewAvatar name={review.name} index={i} />
+                  <div>
+                    <h3 className="font-semibold text-neutral-900">{review.name}</h3>
+                    <p className="text-xs text-neutral-500">{review.place}</p>
+                  </div>
+                </div>
+                <div className="flex gap-0.5 mb-3" aria-label={`${review.rating} out of 5 stars`}>
+                  {Array.from({ length: review.rating }).map((_, s) => (
+                    <span key={s} style={{ color: ACCENT }}>★</span>
+                  ))}
+                </div>
+                <p className="text-neutral-600 leading-relaxed text-[15px]">“{review.text}”</p>
+              </article>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex justify-center items-center gap-2 mt-8">
+        {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => setIndex(i)}
+            aria-label={`Go to review set ${i + 1}`}
+            className="h-2 rounded-full transition-all"
+            style={{
+              width: i === index ? 24 : 8,
+              background: i === index ? ACCENT : "#d4d4d4",
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -261,7 +429,7 @@ export default function Home() {
               air of the Kamal Bunn forest, and fall asleep to the soft rush of the Kunhar River.
             </p>
             <p className="text-neutral-600 leading-relaxed mb-8 text-[17px]">
-              Every detail — from our hand-crafted rooms to our open lawns and riverside BBQ nights —
+              Every detail - from our hand-crafted rooms to our open lawns and riverside BBQ nights -
               is designed to make your stay genuinely unforgettable.
             </p>
             <div className="flex gap-8">
@@ -470,7 +638,7 @@ export default function Home() {
                 Kids Play Area
               </h3>
               <p className="text-white/90 max-w-md leading-relaxed">
-                A safe, joyful playground in the open lawn — swings, slides, and plenty of room to run.
+                A safe, joyful playground in the open lawn - swings, slides, and plenty of room to run.
               </p>
               <span className="inline-block mt-3 text-sm font-semibold text-white/90 group-hover:translate-x-1 transition-transform">
                 View gallery →
@@ -498,7 +666,7 @@ export default function Home() {
                 Bonfire Nights
               </h3>
               <p className="text-white/90 max-w-md leading-relaxed">
-                Crisp valley air, warm flames, and the sound of the Kunhar — every evening at Salsa.
+                Crisp valley air, warm flames, and the sound of the Kunhar - every evening at Salsa.
               </p>
               <span className="inline-block mt-3 text-sm font-semibold text-white/90 group-hover:translate-x-1 transition-transform">
                 View gallery →
@@ -509,6 +677,30 @@ export default function Home() {
       </section>
 
 
+      {/* REVIEWS */}
+      <section className="py-20 md:py-24 px-4 md:px-6" style={{ background: "#fafafa" }}>
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <span
+              className="text-xs font-bold tracking-[0.25em] uppercase"
+              style={{ color: ACCENT }}
+            >
+              Guest Reviews
+            </span>
+            <h2
+              className="text-3xl md:text-5xl font-bold tracking-tight mt-3"
+              style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            >
+              What our guests say
+            </h2>
+            <p className="text-neutral-600 mt-3 max-w-xl mx-auto">
+              Real stays, warm words - from visitors who found quiet luxury in Kaghan Valley.
+            </p>
+          </div>
+          <ReviewsCarousel />
+        </div>
+      </section>
+
       {/* CTA */}
       <section
         className="py-24 px-6 relative overflow-hidden"
@@ -516,7 +708,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14">
 
-          {/* LEFT — text + contact buttons */}
+          {/* LEFT - text + contact buttons */}
           <div className="w-full md:w-[45%] text-white text-center md:text-left">
             <h2
               className="text-4xl md:text-5xl font-bold mb-5"
@@ -547,7 +739,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* RIGHT — Google Maps embed */}
+          {/* RIGHT - Google Maps embed */}
           <div className="w-full md:w-[55%]">
             <div
               className="w-full overflow-hidden shadow-2xl"
@@ -561,7 +753,7 @@ export default function Home() {
                 allowFullScreen
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                title="Salsa Resort Location — Kaghan Valley"
+                title="Salsa Resort Location - Kaghan Valley"
               />
             </div>
           </div>
@@ -626,7 +818,7 @@ export default function Home() {
               />
             </div>
             <p className="text-neutral-400 leading-relaxed max-w-md">
-              An elegant and serene resort in the heart of Kaghan Valley, Pakistan — offering
+              An elegant and serene resort in the heart of Kaghan Valley, Pakistan - offering
               unmatched comfort, natural beauty, and exceptional hospitality.
             </p>
           </div>
@@ -680,7 +872,7 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* Web font + scroll behavior — scoped, no global theme edits */}
+      {/* Web font + scroll behavior - scoped, no global theme edits */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
         html { scroll-behavior: smooth; }

@@ -1,4 +1,4 @@
-/** Facebook page — The Salsa Resorts Kaghan */
+/** Facebook page - The Salsa Resorts Kaghan */
 export const FACEBOOK_PAGE_URL = "https://www.facebook.com/profile.php?id=61592319543466";
 
 /** YouTube channel */
