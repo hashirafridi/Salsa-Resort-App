@@ -1,15 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
-import { FACEBOOK_PAGE_URL, YOUTUBE_UPLOADS_PLAYLIST_ID } from "../lib/media";
+import { useEffect, useRef, useState } from "react";
+import { FACEBOOK_PAGE_URL, YOUTUBE_CHANNEL_URL, YOUTUBE_UPLOADS_PLAYLIST_ID } from "../lib/media";
 
 const ACCENT = "#c8324a";
+
+type YTPlayer = {
+  nextVideo: () => void;
+  previousVideo: () => void;
+  destroy: () => void;
+};
 
 declare global {
   interface Window {
     FB?: { XFBML: { parse: (node?: HTMLElement) => void } };
     fbAsyncInit?: () => void;
+    YT?: {
+      Player: new (
+        elementId: string,
+        options: {
+          height?: string | number;
+          width?: string | number;
+          playerVars?: Record<string, string | number>;
+          events?: {
+            onReady?: () => void;
+            onError?: () => void;
+          };
+        }
+      ) => YTPlayer;
+    };
+    onYouTubeIframeAPIReady?: () => void;
   }
 }
 
@@ -40,57 +61,102 @@ function FacebookFeed() {
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white p-4 md:p-6 shadow-sm">
       <div id="fb-root" />
-      <div
-        className="fb-page mx-auto"
-        data-href={FACEBOOK_PAGE_URL}
-        data-tabs="timeline"
-        data-width="500"
-        data-height="650"
-        data-small-header="false"
-        data-adapt-container-width="true"
-        data-hide-cover="false"
-        data-show-facepile="false"
-      />
+      <div className="flex justify-center">
+        <div
+          className="fb-page"
+          data-href={FACEBOOK_PAGE_URL}
+          data-tabs="timeline"
+          data-width="500"
+          data-height="650"
+          data-small-header="false"
+          data-adapt-container-width="true"
+          data-hide-cover="false"
+          data-show-facepile="false"
+        />
+      </div>
     </div>
   );
 }
 
 function YouTubeFeed() {
-  const hasPlaylist = Boolean(YOUTUBE_UPLOADS_PLAYLIST_ID);
+  const playerRef = useRef<YTPlayer | null>(null);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const createPlayer = () => {
+      if (cancelled || !window.YT?.Player) return;
+      playerRef.current?.destroy();
+      playerRef.current = new window.YT.Player("salsa-yt-player", {
+        height: "100%",
+        width: "100%",
+        playerVars: {
+          listType: "playlist",
+          list: YOUTUBE_UPLOADS_PLAYLIST_ID,
+          rel: 0,
+          modestbranding: 1,
+        },
+        events: {
+          onReady: () => {
+            if (!cancelled) setReady(true);
+          },
+        },
+      });
+    };
+
+    if (window.YT?.Player) {
+      createPlayer();
+    } else {
+      const previous = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        previous?.();
+        createPlayer();
+      };
+
+      if (!document.getElementById("youtube-iframe-api")) {
+        const script = document.createElement("script");
+        script.id = "youtube-iframe-api";
+        script.src = "https://www.youtube.com/iframe_api";
+        document.body.appendChild(script);
+      }
+    }
+
+    return () => {
+      cancelled = true;
+      playerRef.current?.destroy();
+      playerRef.current = null;
+    };
+  }, []);
 
   return (
     <div className="rounded-2xl border border-neutral-200 bg-white overflow-hidden shadow-sm">
-      {hasPlaylist ? (
-        <div className="aspect-video">
-          <iframe
-            className="h-full w-full"
-            src={`https://www.youtube.com/embed/videoseries?list=${YOUTUBE_UPLOADS_PLAYLIST_ID}`}
-            title="Salsa Resort videos on YouTube"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        </div>
-      ) : (
-        <div
-          className="aspect-video flex flex-col items-center justify-center gap-4 px-6 text-center"
-          style={{ background: `linear-gradient(135deg, ${ACCENT}12 0%, #fafafa 100%)` }}
+      <div className="aspect-video bg-neutral-100">
+        <div id="salsa-yt-player" className="h-full w-full" />
+      </div>
+
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 px-4 py-4 border-t border-neutral-100 bg-[#fafafa]">
+        <button
+          type="button"
+          onClick={() => playerRef.current?.previousVideo()}
+          disabled={!ready}
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-5 py-3 text-sm font-semibold text-neutral-800 transition-all hover:border-neutral-400 hover:shadow-sm disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          <div
-            className="flex h-16 w-16 items-center justify-center rounded-full text-white"
-            style={{ background: ACCENT }}
-          >
-            <svg viewBox="0 0 24 24" className="h-8 w-8 fill-current" aria-hidden="true">
-              <path d="M10 16.5v-9l6 4.5-6 4.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-            </svg>
-          </div>
-          <div>
-            <p className="font-semibold text-neutral-800">Resort videos coming soon</p>
-            <p className="mt-1 text-sm text-neutral-500 max-w-sm">
-              Our YouTube channel is being set up. Check back soon for tours, bonfire nights, and valley views.
-            </p>
-          </div>
-        </div>
-      )}
+          ← Previous
+        </button>
+        <p className="text-center text-xs text-neutral-500 px-2">
+          Browse all channel videos · new uploads appear automatically
+        </p>
+        <button
+          type="button"
+          onClick={() => playerRef.current?.nextVideo()}
+          disabled={!ready}
+          className="inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:shadow-md disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+          style={{ background: ACCENT }}
+        >
+          Next →
+        </button>
+      </div>
     </div>
   );
 }
@@ -125,7 +191,7 @@ export default function MediaPage() {
           </span>
           <h1
             className="text-4xl md:text-5xl font-bold tracking-tight mt-3 mb-4"
-            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+            style={{ fontFamily: "'Playfair Display', Georgia, serif", color: ACCENT }}
           >
             Life at Salsa Resort
           </h1>
@@ -134,12 +200,12 @@ export default function MediaPage() {
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12">
+        <div className="max-w-4xl mx-auto space-y-12">
           <div>
             <div className="mb-5">
               <h2
                 className="text-2xl md:text-3xl font-bold"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                style={{ fontFamily: "'Playfair Display', Georgia, serif", color: ACCENT }}
               >
                 Resort Videos
               </h2>
@@ -149,7 +215,7 @@ export default function MediaPage() {
             </div>
             <YouTubeFeed />
             <a
-              href="https://www.youtube.com"
+              href={YOUTUBE_CHANNEL_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-4 text-sm font-semibold transition-transform hover:translate-x-1"
@@ -159,11 +225,11 @@ export default function MediaPage() {
             </a>
           </div>
 
-          <div>
+          <div className="text-center">
             <div className="mb-5">
               <h2
                 className="text-2xl md:text-3xl font-bold"
-                style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+                style={{ fontFamily: "'Playfair Display', Georgia, serif", color: ACCENT }}
               >
                 Facebook Updates
               </h2>
